@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +16,38 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
 
-    static hasMany = [members: AuthUser]
+package org.transmart.searchapp
+
+/**
+ * domain class for auto refresh materialized view in SearchApp (for gene signature items)
+ */
+class SearchBioMarkerCorrelFastMV {
+
+    // correlation types
+    static def GENE_CORREL_TYPE = "GENE"
+    static def PATHWAY_CORREL_TYPE = "PATHWAY_GENE"
+    static def GENE_SIG_CORREL_TYPE = "GENE_SIGNATURE_ITEM"
+
+    Long id
+    Long domainObjectId
+    Long assocBioMarkerId
+    String correlationType
+    Long valueMetric
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_BIO_MKR_CORREL_FAST_MV'
+        version false
+        columns {
+            id column: 'MV_ID'
+            domainObjectId column: 'DOMAIN_OBJECT_ID'
+            assocBioMarkerId column: 'ASSO_BIO_MARKER_ID'
+            correlationType column: 'CORREL_TYPE'
+            valueMetric column: 'VALUE_METRIC'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
     }
 }

@@ -1,5 +1,4 @@
 package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +17,53 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
+class Principal {
+    static transients = ['principalNameWithType']
 
-    String groupCategory
-
-    static hasMany = [members: AuthUser]
+    Long id
+    boolean enabled
+    String type
+    String name
+    String uniqueId = ''
+    Date dateCreated
+    Date lastUpdated
+    String description = ''
+    String principalNameWithType
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
+        table 'SEARCH_AUTH_PRINCIPAL'
+        tablePerHierarchy false
+        version false
+        id generator: 'assigned'
         columns
                 {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
+                    id column: 'ID'
+                    uniqueId column: 'UNIQUE_ID'
+                    name column: 'NAME'
+                    description column: 'DESCRIPTION'
+                    enabled column: 'ENABLED'
+                    type column: 'PRINCIPAL_TYPE'
+                    dateCreated column: 'DATE_CREATED'
+                    lastUpdated column: 'LAST_UPDATED'
                 }
-    }
-
-	static constraints = {
 
     }
+    static constraints = {
+        //enabled()
+        type(nullable: false)
+        description(nullable: true, maxSize: 255)
+        uniqueId(nullable: true)
+    }
 
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    def beforeInsert = {
+        uniqueId = type + " " + id;
+    }
+
+    public String getPrincipalNameWithType() {
+        return type + ' - ' + name;
+    }
+
+    public void setPrincipalNameWithType(String n) {
+
     }
 }

@@ -33,10 +33,6 @@ class UserGroup extends Principal {
                 }
     }
 
-	static constraints = {
-
-    }
-
     public UserGroup() {
         groupCategory = 'USER_GROUP'
         this.type = 'GROUP'

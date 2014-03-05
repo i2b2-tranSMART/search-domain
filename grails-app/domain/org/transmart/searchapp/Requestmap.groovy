@@ -1,5 +1,4 @@
 package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +17,28 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
-
-    static hasMany = [members: AuthUser]
-
+/**
+ * Request Map domain class used by Spring Security plugin to determine the security level by URL
+ */
+class Requestmap {
+    String url
+    String configAttribute
+    Long id
+    Long version
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_REQUEST_MAP'
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            id column: 'ID'
+            version column: 'VERSION'
+            configAttribute column: 'CONFIG_ATTRIBUTE'
+            url column: 'URL'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        url(blank: false, unique: true)
+        configAttribute(blank: false)
     }
 }

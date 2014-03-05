@@ -1,5 +1,4 @@
 package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +17,36 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
+/**
+ * Provides access to the logging table
+ */
 
-    static hasMany = [members: AuthUser]
+public class AccessLog {
+    Long id
+    String username;
+    String event;
+    String eventmessage;
+    String requestURL;
+    Date accesstime;
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_APP_ACCESS_LOG'
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        version false
+        id column: 'id'
+        username column: 'USER_NAME'
+        event column: 'EVENT'
+        eventmessage column: 'EVENT_MESSAGE'
+        requestURL column: 'REQUEST_URL'
+        accesstime column: 'ACCESS_TIME'
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        username(blank: false)
+        event(nullable: false)
+        eventmessage(nullable: true)
+        requestURL(nullable: true)
+        accesstime(nullable: false)
     }
 }

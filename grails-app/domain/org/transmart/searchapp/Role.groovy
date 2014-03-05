@@ -18,27 +18,27 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
+class Role {
+    // role types
+    static def ADMIN_ROLE = "ROLE_ADMIN"
+    static def STUDY_OWNER_ROLE = "ROLE_STUDY_OWNER"
+    static def SPECTATOR_ROLE = "ROLE_SPECTATOR"
+    static def DS_EXPLORER_ROLE = "ROLE_DATASET_EXPLORER_ADMIN"
+    static def PUBLIC_USER_ROLE = "ROLE_PUBLIC_USER"
+    static def TRAINING_USER_ROLE = "ROLE_TRAINING_USER"
 
-    String groupCategory
+    static hasMany = [people: AuthUser]
 
-    static hasMany = [members: AuthUser]
+    String description
+    String authority
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_ROLE'
+        people joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'PEOPLE_ID', column: 'AUTHORITIES_ID']
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        authority(blank: false, unique: true)
+        description()
     }
 }

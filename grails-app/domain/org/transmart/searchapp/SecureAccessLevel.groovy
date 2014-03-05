@@ -1,5 +1,4 @@
 package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +17,24 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
-
-    String groupCategory
-
-    static hasMany = [members: AuthUser]
+class SecureAccessLevel {
+    static def OWN = "OWN"
+    Long accessLevelValue
+    Long id
+    String accessLevelName
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_SEC_ACCESS_LEVEL'
+        version false
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            accessLevelValue column: 'ACCESS_LEVEL_VALUE'
+            id column: 'SEARCH_SEC_ACCESS_LEVEL_ID'
+            accessLevelName column: 'ACCESS_LEVEL_NAME'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        accessLevelName(nullable: true, maxSize: 400)
     }
 }

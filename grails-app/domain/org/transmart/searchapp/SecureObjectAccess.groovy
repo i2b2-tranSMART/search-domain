@@ -18,27 +18,48 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
+class SecureObjectAccess {
 
-    String groupCategory
+    static transients = ['objectAccessName', 'principalAccessName']
 
-    static hasMany = [members: AuthUser]
+    Long id
+    Principal principal
+    SecureObject secureObject
+    SecureAccessLevel accessLevel
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_AUTH_SEC_OBJECT_ACCESS'
+        version false
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            id column: 'AUTH_SEC_OBJ_ACCESS_ID'
+            principal column: 'AUTH_PRINCIPAL_ID'
+            secureObject column: 'SECURE_OBJECT_ID'
+            accessLevel column: 'SECURE_ACCESS_LEVEL_ID'
+        }
     }
 
-	static constraints = {
+    static constraints = {
+        //principal(nullable:true)
+    }
+
+    public String toString() {
+        return objectAccessName;
+    }
+
+    public String getObjectAccessName() {
+        return secureObject.displayName + ' (' + accessLevel.accessLevelName + ')';
+    }
+
+    public void setObjectAccessName(String s) {
 
     }
 
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    public String getPrincipalAccessName() {
+        return principal.type + '-' + principal.name + ' (' + accessLevel.accessLevelName + ')';
+    }
+
+    public void setPrincipalAccessName(String s) {
+
     }
 }

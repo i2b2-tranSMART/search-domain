@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +16,38 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
+/*
+ * $Id: CustomFilter.groovy 9178 2011-08-24 13:50:06Z mmcduffie $
+ */
+package org.transmart.searchapp
 
-    static hasMany = [members: AuthUser]
-
+class CustomFilter {
+    Long id
+    Long searchUserId
+    String name
+    String description
+    String privateFlag
+    String summary
+    static hasMany = [items: CustomFilterItem]
+    static transients = ["summary"]
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_CUSTOM_FILTER'
+        version false
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            id column: 'SEARCH_CUSTOM_FILTER_ID'
+            searchUserId column: 'SEARCH_USER_ID'
+            name column: 'NAME'
+            description column: 'DESCRIPTION'
+            privateFlag column: 'PRIVATE'
+            items column: 'SEARCH_CUSTOM_FILTER_ID'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        name(maxSize: 400)
+        description(nullable: true, maxSize: 4000)
+        privateFlag(maxSize: 1)
     }
 }

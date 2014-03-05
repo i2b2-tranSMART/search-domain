@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +16,36 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
 
-    static hasMany = [members: AuthUser]
+package org.transmart.searchapp
+
+/**
+ * domain class for gene signature file schemas
+ */
+class GeneSignatureFileSchema {
+    Long id
+    String name
+    String description
+    Long numberColumns
+    boolean supported
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_GENE_SIG_FILE_SCHEMA'
+        version false
+        cache usage: 'read-only'
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            id column: 'SEARCH_GENE_SIG_FILE_SCHEMA_ID'
+            name column: 'NAME'
+            description column: 'DESCRIPTION'
+            numberColumns column: 'NUMBER_COLUMNS'
+            supported column: 'SUPPORTED'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        name(maxSize: 100)
+        description(nullable: true, maxSize: 255)
     }
 }

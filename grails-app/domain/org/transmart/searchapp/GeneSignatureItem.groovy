@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +16,45 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
 
-    static hasMany = [members: AuthUser]
+package org.transmart.searchapp
+
+import org.transmart.biomart.BioAssayFeatureGroup
+import org.transmart.biomart.BioMarker
+
+/**
+ * domain class for a gene signature item
+ */
+class GeneSignatureItem {
+
+    Long id
+    GeneSignature geneSignature
+    BioMarker bioMarker
+    BioAssayFeatureGroup probeset
+    String bioDataUniqueId
+    Double foldChgMetric
+
+    static belongsTo = [geneSignature: GeneSignature]
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_GENE_SIGNATURE_ITEM'
+        version false
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            id column: 'ID'
+            geneSignature column: 'SEARCH_GENE_SIGNATURE_ID'
+            bioMarker column: 'BIO_MARKER_ID'
+            probeset column: 'BIO_ASSAY_FEATURE_GROUP_ID'
+            foldChgMetric column: "FOLD_CHG_METRIC"
+            bioDataUniqueId column: 'BIO_DATA_UNIQUE_ID'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        foldChgMetric(nullable: true)
+        bioDataUniqueId(nullable: true)
+        bioMarker(nullable: true)
+        probeset(nullable: true)
     }
 }

@@ -18,27 +18,19 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
-
-    String groupCategory
-
-    static hasMany = [members: AuthUser]
+class SecureObjectPath {
+    Long id
+    SecureObject secureObject
+    String conceptPath
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
-    }
-
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+        table 'SEARCH_SECURE_OBJECT_PATH'
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        version false
+        columns {
+            id column: 'SEARCH_SECURE_OBJ_PATH_ID'
+            secureObject column: 'SEARCH_SECURE_OBJECT_ID'
+            conceptPath column: 'I2B2_CONCEPT_PATH'
+        }
     }
 }

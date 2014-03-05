@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -18,27 +16,38 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
-class UserGroup extends Principal {
 
-    String groupCategory
 
-    static hasMany = [members: AuthUser]
+package org.transmart.searchapp
+
+class SearchKeywordTerm {
+    Long ownerAuthUserId
+    String keywordTerm
+    SearchKeyword searchKeyword
+    Long rank
+    Long id
+    Long termLength
+
+    static belongsTo = [searchKeyword: SearchKeyword]
 
     static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
+        table 'SEARCH_KEYWORD_TERM'
+        version false
+        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+        columns {
+            ownerAuthUserId column: 'OWNER_AUTH_USER_ID'
+            keywordTerm column: 'KEYWORD_TERM'
+            searchKeyword column: 'SEARCH_KEYWORD_ID'
+            rank column: 'RANK'
+            id column: 'SEARCH_KEYWORD_TERM_ID'
+            termLength column: 'TERM_LENGTH'
+        }
     }
 
-	static constraints = {
-
-    }
-
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
+    static constraints = {
+        ownerAuthUserId(nullable: true)
+        keywordTerm(maxSize: 200)
+        rank(nullable: true)
+        termLength(nullable: true)
     }
 }

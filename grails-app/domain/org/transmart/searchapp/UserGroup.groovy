@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -7,7 +5,7 @@ package org.transmart.searchapp
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -18,23 +16,20 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
+package org.transmart.searchapp
+
 class UserGroup extends Principal {
+	String groupCategory = 'USER_GROUP'
 
-    String groupCategory
+	static hasMany = [members: AuthUser]
 
-    static hasMany = [members: AuthUser]
+	static mapping = {
+		table 'SEARCH_AUTH_GROUP'
 
-    static mapping = {
-        table 'SEARCH_AUTH_GROUP'
-        columns
-                {
-                    groupCategory column: 'GROUP_CATEGORY'
-                    members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
-                }
-    }
+		members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
+	}
 
-    public UserGroup() {
-        groupCategory = 'USER_GROUP'
-        this.type = 'GROUP'
-    }
+	UserGroup() {
+		type = PrincipalType.GROUP
+	}
 }

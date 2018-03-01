@@ -1,28 +1,18 @@
 package org.transmart.searchapp
 
 class Feedback {
-    Long id
-    Long searchUserId
-    Date createDate
-    String feedbackText
-    String appVersion
+	String appVersion
+	Date createDate
+	String feedbackText
+	Long searchUserId
 
-    static mapping = {
-        table 'SEARCH_USER_FEEDBACK'
-        version false
-        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
-        columns {
-            id column: 'SEARCH_USER_FEEDBACK_ID'
-            searchUserId column: 'SEARCH_USER_ID'
-            createDate column: 'CREATE_DATE'
-            feedbackText column: 'FEEDBACK_TEXT'
-            appVersion column: 'APP_VERSION'
-        }
-    }
+	static mapping = {
+		table 'SEARCH_USER_FEEDBACK'
+		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_USER_FEEDBACK_ID'
+		version false
+	}
 
-
-    static constraints = {
-        searchUserId(nullable: true)
-    }
-
+	static constraints = {
+		searchUserId nullable: true
+	}
 }

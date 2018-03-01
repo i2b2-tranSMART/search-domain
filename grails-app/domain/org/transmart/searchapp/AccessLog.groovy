@@ -1,4 +1,3 @@
-package org.transmart.searchapp
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -6,7 +5,7 @@ package org.transmart.searchapp
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -17,6 +16,7 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
+package org.transmart.searchapp
 
 /**
  * Provides access to the logging table. Deprecated.
@@ -24,33 +24,26 @@ package org.transmart.searchapp
  *  - @see org.transmartproject.core.log.AccessLogEntry
  *  - @see org.transmartproject.core.log.AccessLogEntryResource
  */
-
 @Deprecated
-public class AccessLog {
-    Long id
-    String username;
-    String event;
-    String eventmessage;
-    String requestURL;
-    Date accesstime;
+class AccessLog {
+	Date accesstime
+	String event
+	String eventmessage
+	String requestURL
+	String username
 
-    static mapping = {
-        table 'SEARCH_APP_ACCESS_LOG'
-        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
-        version false
-        id column: 'id'
-        username column: 'USER_NAME'
-        event column: 'EVENT'
-        eventmessage column: 'EVENT_MESSAGE', type: 'text'
-        requestURL column: 'REQUEST_URL'
-        accesstime column: 'ACCESS_TIME'
-    }
+	static mapping = {
+		table 'SEARCH_APP_ACCESS_LOG'
+		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+		version false
 
-    static constraints = {
-        username(blank: false)
-        event(nullable: false)
-        eventmessage(nullable: true)
-        requestURL(nullable: true)
-        accesstime(nullable: false)
-    }
+		eventmessage type: 'text'
+		requestURL column: 'REQUEST_URL'
+	}
+
+	static constraints = {
+		eventmessage nullable: true
+		requestURL nullable: true
+		username blank: false
+	}
 }

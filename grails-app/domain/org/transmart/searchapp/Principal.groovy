@@ -1,4 +1,3 @@
-package org.transmart.searchapp
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -6,7 +5,7 @@ package org.transmart.searchapp
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -17,54 +16,52 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
+package org.transmart.searchapp
+
 class Principal {
-    static transients = ['principalNameWithType']
 
-    Long id
-    boolean enabled
-    String type
-    String name
-    String uniqueId = ''
-    Date dateCreated
-    Date lastUpdated
-    String description = ''
-    String principalNameWithType
+	static enum PrincipalType {
+		ROOT('ROOT'),
+		USER('USER'),
+		PUBLIC('PUBLIC'),
+		GROUP('GROUP')
 
-    static mapping = {
-        table 'SEARCH_AUTH_PRINCIPAL'
-        tablePerHierarchy false
-        version false
-        id generator: 'sequence',
-                params: [sequence: 'hibernate_sequence', schema: 'searchapp']
-        columns
-                {
-                    id column: 'ID'
-                    uniqueId column: 'UNIQUE_ID'
-                    name column: 'NAME'
-                    description column: 'DESCRIPTION'
-                    enabled column: 'ENABLED'
-                    type column: 'PRINCIPAL_TYPE'
-                    dateCreated column: 'DATE_CREATED'
-                    lastUpdated column: 'LAST_UPDATED'
-                }
+		final String type
 
-    }
-    static constraints = {
-        //enabled()
-        type(nullable: false)
-        description(nullable: true, maxSize: 255)
-        uniqueId(nullable: true)
-    }
+		PrincipalType(String type) {
+			this.type = type
+		}
+	}
 
-    def beforeInsert = {
-        uniqueId = type + " " + id;
-    }
+	Date dateCreated
+	String description = ''
+	boolean enabled
+	Date lastUpdated
+	String name
+	PrincipalType type
+	String uniqueId = ''
 
-    public String getPrincipalNameWithType() {
-        return type + ' - ' + name;
-    }
+	static transients = ['principalNameWithType']
 
-    public void setPrincipalNameWithType(String n) {
+	static mapping = {
+		table 'SEARCH_AUTH_PRINCIPAL'
+		tablePerHierarchy false
+		id generator: 'sequence', params: [sequence: 'hibernate_sequence', schema: 'searchapp']
+		version false
 
-    }
+		type column: 'PRINCIPAL_TYPE'
+	}
+
+	static constraints = {
+		description nullable: true
+		uniqueId nullable: true
+	}
+
+	def beforeInsert() {
+		uniqueId = type + ' ' + id
+	}
+
+	String getPrincipalNameWithType() {
+		type + ' - ' + name
+	}
 }

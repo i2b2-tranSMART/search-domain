@@ -1,5 +1,3 @@
-package org.transmart.searchapp
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -7,7 +5,7 @@ package org.transmart.searchapp
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -18,27 +16,29 @@ package org.transmart.searchapp
  *
  *
  ******************************************************************/
+package org.transmart.searchapp
+
 class Role {
-    // role types
-    static def ADMIN_ROLE = "ROLE_ADMIN"
-    static def STUDY_OWNER_ROLE = "ROLE_STUDY_OWNER"
-    static def SPECTATOR_ROLE = "ROLE_SPECTATOR"
-    static def DS_EXPLORER_ROLE = "ROLE_DATASET_EXPLORER_ADMIN"
-    static def PUBLIC_USER_ROLE = "ROLE_PUBLIC_USER"
-    static def TRAINING_USER_ROLE = "ROLE_TRAINING_USER"
+	// role types
+	public static final String ADMIN_ROLE = 'ROLE_ADMIN'
+	public static final String STUDY_OWNER_ROLE = 'ROLE_STUDY_OWNER'
+	public static final String SPECTATOR_ROLE = 'ROLE_SPECTATOR'
+	public static final String DS_EXPLORER_ROLE = 'ROLE_DATASET_EXPLORER_ADMIN'
+	public static final String PUBLIC_USER_ROLE = 'ROLE_PUBLIC_USER'
+	public static final String TRAINING_USER_ROLE = 'ROLE_TRAINING_USER'
 
-    static hasMany = [people: AuthUser]
+	String authority
+	String description
 
-    String description
-    String authority
+	static hasMany = [people: AuthUser]
 
-    static mapping = {
-        table 'SEARCH_ROLE'
-        people joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'PEOPLE_ID', column: 'AUTHORITIES_ID']
-    }
+	static mapping = {
+		table 'SEARCH_ROLE'
 
-    static constraints = {
-        authority(blank: false, unique: true)
-        description()
-    }
+		people joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'PEOPLE_ID', column: 'AUTHORITIES_ID']
+	}
+
+	static constraints = {
+		authority blank: false, unique: true
+	}
 }

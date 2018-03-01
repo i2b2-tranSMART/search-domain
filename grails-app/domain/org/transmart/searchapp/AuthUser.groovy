@@ -1,9 +1,3 @@
-package org.transmart.searchapp
-
-import org.hibernate.SQLQuery
-import org.hibernate.classic.Session
-import org.hibernate.type.StandardBasicTypes
-
 /*************************************************************************
  * tranSMART - translational medicine data mart
  *
@@ -11,7 +5,7 @@ import org.hibernate.type.StandardBasicTypes
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -22,119 +16,92 @@ import org.hibernate.type.StandardBasicTypes
  *
  *
  ******************************************************************/
+package org.transmart.searchapp
+
+import org.hibernate.classic.Session
+
 class AuthUser extends Principal {
-    static transients = ['pass']
-    static hasMany = [authorities: Role, groups: UserGroup]
-    static belongsTo = [Role, UserGroup]
+	Boolean changePassword
+	String email
+	boolean emailShow
+	String federatedId
+	Integer loginAttempts = 0
+	String pass = '[secret]' // plain password to create a hashed password
+	String passwd
+	String username
+	String userRealName
 
-    String username
-    String userRealName
-    String passwd
-    String email
-    String federatedId
-    boolean emailShow
-    Boolean changePassword
+	static transients = ['admin', 'dseAdmin', 'pass']
 
-    /** plain password to create a MD5 password */
-    String pass = '[secret]'
+	static hasMany = [authorities: Role, groups: UserGroup]
 
-    static mapping = {
-        table 'SEARCH_AUTH_USER'
-        version false
-        columns {
-            id column: 'ID'
-            username column: 'USERNAME'
-            userRealName column: 'USER_REAL_NAME'
-            passwd column: 'PASSWD'
-            email column: 'EMAIL'
-            String federatedId
-            emailShow column: 'EMAIL_SHOW'
-            authorities joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'AUTHORITIES_ID', column: 'PEOPLE_ID']
-            groups joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_GROUP_ID', key: 'AUTH_USER_ID']
-            changePassword column: 'CHANGE_PASSWD'
-        }
-    }
+	static belongsTo = [Role, UserGroup]
 
-    static constraints = {
-        username(blank: false, unique: true)
-        userRealName(blank: false)
-        passwd(blank: false)
-        email(nullable: true, maxSize: 255)
-        changePassword(nullable: true)
-        federatedId(nullable: true)
-    }
+	static mapping = {
+		table 'SEARCH_AUTH_USER'
+		version false
 
-    def String toString() {
-        return userRealName + " - " + username;
-    }
-
-    public AuthUser() {
-        this.type = 'USER';
-    }
-
-    def beforeInsert = {
-        if (name == null)
-            name = userRealName
-    }
-
-    def beforeUpdate = {
-        name = userRealName
-    }
-    
-        /**
-	 * is this user an Admin
-	 */
-    def isAdmin() {
-		def bAdmin = false;
-		authorities.each { if(it.authority==Role.ADMIN_ROLE) bAdmin = true; }
-		return bAdmin;
+		authorities joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'AUTHORITIES_ID', column: 'PEOPLE_ID']
+		changePassword column: 'CHANGE_PASSWD'
+		groups joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_GROUP_ID', key: 'AUTH_USER_ID']
+		loginAttempts column: 'LOGIN_ATTEMPT_COUNT'
 	}
 
-    /**
-     * is this user an Data Set Explorer Admin
-     */
-    def isDseAdmin() {
-        authorities.any { it.authority == Role.DS_EXPLORER_ROLE }
-    }
+	static constraints = {
+		changePassword nullable: true
+		email nullable: true
+		federatedId nullable: true
+		passwd blank: false
+		username blank: false, unique: true
+		userRealName blank: false
+	}
 
-    /*
-     * Should be called with an open session and active transaction
-     */
-    static AuthUser createFederatedUser(String federatedId,
-                                        String username,
-                                        String realName,
-                                        String email,
-                                        Session session)
-    {
-//G
-        //Long id = query.uniqueResult()
-        //log.debug("New user will have id '$id'")
+	/*
+	 * Should be called with an open session and active transaction
+	 */
+	static AuthUser createFederatedUser(String federatedId, String username, String realName,
+	                                    String email, Session session) {
 
-        def ret = AuthUser.create()
-        //ret.id = id
+		new AuthUser(federatedId: federatedId, username: username ?: federatedId,
+				userRealName: realName ?: '<NONE PROVIDED>', name: realName,
+				email: email, passwd: 'NO_PASSWORD', enabled: true).addToAuthorities Role.findByAuthority(Role.SPECTATOR_ROLE)
+	}
 
-        ret.federatedId = federatedId
-        ret.username = username ?: federatedId
-        ret.userRealName = realName ?: '<NONE PROVIDED>'
-        ret.name = realName
-        ret.email = email
-        ret.passwd = 'NO_PASSWORD'
-        ret.enabled = true
+	// TODO BB move to tx service
+	static void removeAll(Role role) {
+		List<AuthUser> usersWithRole = withCriteria {
+			authorities {
+				eq('id', role.id)
+			}
+		}
+		for (AuthUser user in usersWithRole) {
+			user.removeFromAuthorities role
+		}
+	}
 
-        ret.addToAuthorities(Role.findByAuthority(Role.SPECTATOR_ROLE))
+	AuthUser() {
+		type = PrincipalType.USER
+	}
 
-        ret
-    }
+	String toString() {
+		userRealName + ' - ' + username
+	}
 
-    static void removeAll(Role role) {
-        def usersWithRole = AuthUser.withCriteria {
-            authorities {
-                eq('id', role.id)
-            }
-        }
-        usersWithRole.each { AuthUser user ->
-            user.removeFromAuthorities(role)
-        }
-    }
+	def beforeInsert() {
+		if (!name) {
+			name = userRealName
+		}
+	}
 
+	def beforeUpdate() {
+		name = userRealName
+	}
+
+	boolean isAdmin() {
+		authorities.any { it.authority == Role.ADMIN_ROLE }
+	}
+
+	boolean isDseAdmin() {
+		authorities.any { it.authority == Role.DS_EXPLORER_ROLE }
+	}
 }

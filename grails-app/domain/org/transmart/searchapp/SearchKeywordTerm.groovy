@@ -5,7 +5,7 @@
  *
  * This product includes software developed at Janssen Research & Development, LLC.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software  * Foundation, either version 3 of the License, or (at your option) any later version, along with the following terms:
  * 1.	You may convey a work based on this program in accordance with section 5, provided that you retain the above notices.
  * 2.	You may convey verbatim copies of this program code as you receive it, in any medium, provided that you retain the above notices.
@@ -16,38 +16,26 @@
  *
  *
  ******************************************************************/
-
-
 package org.transmart.searchapp
 
 class SearchKeywordTerm {
-    Long ownerAuthUserId
-    String keywordTerm
-    SearchKeyword searchKeyword
-    Long rank
-    Long id
-    Long termLength
+	String keywordTerm
+	Long ownerAuthUserId
+	Long rank
+	SearchKeyword searchKeyword
+	Long termLength
 
-    static belongsTo = [searchKeyword: SearchKeyword]
+	static belongsTo = [searchKeyword: SearchKeyword]
 
-    static mapping = {
-        table 'SEARCH_KEYWORD_TERM'
-        version false
-        id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
-        columns {
-            ownerAuthUserId column: 'OWNER_AUTH_USER_ID'
-            keywordTerm column: 'KEYWORD_TERM'
-            searchKeyword column: 'SEARCH_KEYWORD_ID'
-            rank column: 'RANK'
-            id column: 'SEARCH_KEYWORD_TERM_ID'
-            termLength column: 'TERM_LENGTH'
-        }
-    }
+	static mapping = {
+		version false
+		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_KEYWORD_TERM_ID'
+	}
 
-    static constraints = {
-        ownerAuthUserId(nullable: true)
-        keywordTerm(maxSize: 200)
-        rank(nullable: true)
-        termLength(nullable: true)
-    }
+	static constraints = {
+		keywordTerm maxSize: 200
+		ownerAuthUserId nullable: true
+		rank nullable: true
+		termLength nullable: true
+	}
 }

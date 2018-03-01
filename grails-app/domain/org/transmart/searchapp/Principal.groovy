@@ -53,7 +53,7 @@ class Principal {
 	}
 
 	static constraints = {
-		description nullable: true
+		description nullable: true, maxSize: 4000
 		uniqueId nullable: true
 	}
 

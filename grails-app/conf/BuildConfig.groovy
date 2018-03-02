@@ -14,8 +14,8 @@ grails.project.dependency.resolution = {
 	}
 
 	plugins {
-		compile ':biomart-domain:16.2'
-		compile ':transmart-java:16.2'
+		compile ':biomart-domain:18.1-SNAPSHOT'
+		compile ':transmart-java:18.1-SNAPSHOT'
 
 		build ':release:3.1.2', ':rest-client-builder:2.1.1', {
 			export = false

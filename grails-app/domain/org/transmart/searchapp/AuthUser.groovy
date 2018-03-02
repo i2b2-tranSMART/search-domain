@@ -18,8 +18,6 @@
  ******************************************************************/
 package org.transmart.searchapp
 
-import org.hibernate.classic.Session
-
 class AuthUser extends Principal {
 	Boolean changePassword
 	String email
@@ -59,9 +57,7 @@ class AuthUser extends Principal {
 	/*
 	 * Should be called with an open session and active transaction
 	 */
-	static AuthUser createFederatedUser(String federatedId, String username, String realName,
-	                                    String email, Session session) {
-
+	static AuthUser createFederatedUser(String federatedId, String username, String realName, String email) {
 		new AuthUser(federatedId: federatedId, username: username ?: federatedId,
 				userRealName: realName ?: '<NONE PROVIDED>', name: realName,
 				email: email, passwd: 'NO_PASSWORD', enabled: true).addToAuthorities Role.findByAuthority(Role.SPECTATOR_ROLE)

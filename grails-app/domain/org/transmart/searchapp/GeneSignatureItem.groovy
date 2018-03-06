@@ -32,8 +32,8 @@ class GeneSignatureItem {
 	static belongsTo = [geneSignature: GeneSignature]
 
 	static mapping = {
-		table 'SEARCH_GENE_SIGNATURE_ITEM'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+		table 'SEARCHAPP.SEARCH_GENE_SIGNATURE_ITEM'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID']
 		version false
 
 		bioDataUniqueId column: 'BIO_DATA_UNIQUE_ID'

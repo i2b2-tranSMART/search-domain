@@ -18,18 +18,20 @@
  ******************************************************************/
 package org.transmart.searchapp
 
+import static org.transmart.searchapp.Principal.PrincipalType.GROUP
+
 class UserGroup extends Principal {
 	String groupCategory = 'USER_GROUP'
 
 	static hasMany = [members: AuthUser]
 
 	static mapping = {
-		table 'SEARCH_AUTH_GROUP'
+		table 'SEARCHAPP.SEARCH_AUTH_GROUP'
 
-		members joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
+		members joinTable: [name: 'SEARCHAPP.SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_USER_ID', key: 'AUTH_GROUP_ID']
 	}
 
 	UserGroup() {
-		type = PrincipalType.GROUP
+		type = GROUP
 	}
 }

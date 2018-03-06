@@ -10,7 +10,7 @@ class AuthUserSecureAccess {
 	static transients = ['objectAccessName', 'principalAccessName']
 
 	static mapping = {
-		table 'SEARCH_AUTH_USER_SEC_ACCESS_V'
+		table 'SEARCHAPP.SEARCH_AUTH_USER_SEC_ACCESS_V'
 		id column: 'SEARCH_AUTH_USER_SEC_ACCESS_ID'
 		version false
 

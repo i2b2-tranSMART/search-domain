@@ -31,8 +31,8 @@ class CustomFilter {
 	static hasMany = [items: CustomFilterItem]
 
 	static mapping = {
-		table 'SEARCH_CUSTOM_FILTER'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_CUSTOM_FILTER_ID'
+		table 'SEARCHAPP.SEARCH_CUSTOM_FILTER'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_CUSTOM_FILTER_ID'
 		version false
 
 		items column: 'SEARCH_CUSTOM_FILTER_ID'

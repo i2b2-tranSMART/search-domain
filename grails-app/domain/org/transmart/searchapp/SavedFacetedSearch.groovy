@@ -29,7 +29,8 @@ class SavedFacetedSearch {
 	Long userId	// would like to reference the AuthUser class, but can't because it is in default package -- for now just reference the id
 
 	static mapping = {
-		id generator: 'sequence', params: [sequence: 'SEQ_SAVED_FACETED_SEARCH_ID'], column: 'SAVED_FACETED_SEARCH_ID'
+		table 'SEARCHAPP.SAVED_FACETED_SEARCH'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SAVED_FACETED_SEARCH_ID'], column: 'SAVED_FACETED_SEARCH_ID'
 		version false
 	}
 

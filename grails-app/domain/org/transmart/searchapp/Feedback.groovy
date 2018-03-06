@@ -7,8 +7,8 @@ class Feedback {
 	Long searchUserId
 
 	static mapping = {
-		table 'SEARCH_USER_FEEDBACK'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_USER_FEEDBACK_ID'
+		table 'SEARCHAPP.SEARCH_USER_FEEDBACK'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_USER_FEEDBACK_ID'
 		version false
 	}
 

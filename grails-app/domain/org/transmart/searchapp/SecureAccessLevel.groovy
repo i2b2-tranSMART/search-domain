@@ -25,8 +25,8 @@ class SecureAccessLevel {
 	Long accessLevelValue
 
 	static mapping = {
-		table 'SEARCH_SEC_ACCESS_LEVEL'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_SEC_ACCESS_LEVEL_ID'
+		table 'SEARCHAPP.SEARCH_SEC_ACCESS_LEVEL'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_SEC_ACCESS_LEVEL_ID'
 		version false
 	}
 

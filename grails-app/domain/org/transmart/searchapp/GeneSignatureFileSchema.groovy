@@ -25,8 +25,8 @@ class GeneSignatureFileSchema {
 	boolean supported
 
 	static mapping = {
-		table 'SEARCH_GENE_SIG_FILE_SCHEMA'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_GENE_SIG_FILE_SCHEMA_ID'
+		table 'SEARCHAPP.SEARCH_GENE_SIG_FILE_SCHEMA'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_GENE_SIG_FILE_SCHEMA_ID'
 		version false
 		cache usage: 'read-only'
 	}

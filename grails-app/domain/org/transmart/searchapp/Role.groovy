@@ -33,9 +33,9 @@ class Role {
 	static hasMany = [people: AuthUser]
 
 	static mapping = {
-		table 'SEARCH_ROLE'
+		table 'SEARCHAPP.SEARCH_ROLE'
 
-		people joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'PEOPLE_ID', column: 'AUTHORITIES_ID']
+		people joinTable: [name: 'SEARCHAPP.SEARCH_ROLE_AUTH_USER', key: 'PEOPLE_ID', column: 'AUTHORITIES_ID']
 	}
 
 	static constraints = {

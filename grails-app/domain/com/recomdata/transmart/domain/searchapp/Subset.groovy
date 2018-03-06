@@ -32,7 +32,7 @@ class Subset {
 
 	static mapping = {
 		table 'SEARCHAPP.SUBSET'
-		id generator: 'sequence', params: [sequence: 'SEQ_BIO_DATA_ID'], column: 'SUBSET_ID'
+		id generator: 'sequence', params: [sequence: 'BIOMART.SEQ_BIO_DATA_ID'], column: 'SUBSET_ID'
 		version false
 
 		queryID1 column: 'QUERY_MASTER_ID_1'

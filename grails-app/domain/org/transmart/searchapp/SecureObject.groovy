@@ -27,8 +27,8 @@ class SecureObject {
 	static hasMany = [conceptPaths: SecureObjectPath]
 
 	static mapping = {
-		table 'SEARCH_SECURE_OBJECT'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_SECURE_OBJECT_ID'
+		table 'SEARCHAPP.SEARCH_SECURE_OBJECT'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_SECURE_OBJECT_ID'
 		version false
 	}
 

@@ -28,8 +28,9 @@ class SearchKeywordTerm {
 	static belongsTo = [searchKeyword: SearchKeyword]
 
 	static mapping = {
+		table 'SEARCHAPP.SEARCH_KEYWORD_TERM'
 		version false
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_KEYWORD_TERM_ID'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_KEYWORD_TERM_ID'
 	}
 
 	static constraints = {

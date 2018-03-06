@@ -34,7 +34,7 @@ class SearchBioMarkerCorrelFastMV {
 	Long valueMetric
 
 	static mapping = {
-		table 'SEARCH_BIO_MKR_CORREL_FAST_MV'
+		table 'SEARCHAPP.SEARCH_BIO_MKR_CORREL_FAST_MV'
 		id column: 'MV_ID'
 		version false
 

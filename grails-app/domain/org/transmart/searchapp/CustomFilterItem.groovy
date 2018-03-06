@@ -25,8 +25,8 @@ class CustomFilterItem {
 	static belongsTo = [customFilter: CustomFilter]
 
 	static mapping = {
-		table 'SEARCH_CUSTOM_FILTER_ITEM'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'SEARCH_CUSTOM_FILTER_ITEM_ID'
+		table 'SEARCHAPP.SEARCH_CUSTOM_FILTER_ITEM'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'SEARCH_CUSTOM_FILTER_ITEM_ID'
 		version false
 
 		customFilter column: 'SEARCH_CUSTOM_FILTER_ID'

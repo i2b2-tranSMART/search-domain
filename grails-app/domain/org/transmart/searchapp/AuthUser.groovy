@@ -18,6 +18,8 @@
  ******************************************************************/
 package org.transmart.searchapp
 
+import static org.transmart.searchapp.Principal.PrincipalType.USER
+
 class AuthUser extends Principal {
 	Boolean changePassword
 	String email
@@ -36,12 +38,12 @@ class AuthUser extends Principal {
 	static belongsTo = [Role, UserGroup]
 
 	static mapping = {
-		table 'SEARCH_AUTH_USER'
+		table 'SEARCHAPP.SEARCH_AUTH_USER'
 		version false
 
-		authorities joinTable: [name: 'SEARCH_ROLE_AUTH_USER', key: 'AUTHORITIES_ID', column: 'PEOPLE_ID']
+		authorities joinTable: [name: 'SEARCHAPP.SEARCH_ROLE_AUTH_USER', key: 'AUTHORITIES_ID', column: 'PEOPLE_ID']
 		changePassword column: 'CHANGE_PASSWD'
-		groups joinTable: [name: 'SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_GROUP_ID', key: 'AUTH_USER_ID']
+		groups joinTable: [name: 'SEARCHAPP.SEARCH_AUTH_GROUP_MEMBER', column: 'AUTH_GROUP_ID', key: 'AUTH_USER_ID']
 		loginAttempts column: 'LOGIN_ATTEMPT_COUNT'
 	}
 
@@ -76,7 +78,7 @@ class AuthUser extends Principal {
 	}
 
 	AuthUser() {
-		type = PrincipalType.USER
+		type = USER
 	}
 
 	String toString() {

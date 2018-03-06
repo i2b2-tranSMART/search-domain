@@ -24,8 +24,8 @@ class SecureObjectAccess {
 	SecureObject secureObject
 
 	static mapping = {
-		table 'SEARCH_AUTH_SEC_OBJECT_ACCESS'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID'], column: 'AUTH_SEC_OBJ_ACCESS_ID'
+		table 'SEARCHAPP.SEARCH_AUTH_SEC_OBJECT_ACCESS'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID'], column: 'AUTH_SEC_OBJ_ACCESS_ID'
 		version false
 
 		accessLevel column: 'SECURE_ACCESS_LEVEL_ID'

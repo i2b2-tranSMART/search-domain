@@ -12,7 +12,8 @@ class SearchTaxonomy {
 	static transients = ['children', 'parents']
 
 	static mapping = {
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_TAXONOMY_TERM_ID'], column: 'TERM_ID'
+		table 'SEARCHAPP.SEARCH_TAXONOMY'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_TAXONOMY_TERM_ID'], column: 'TERM_ID'
 		version false
 	}
 

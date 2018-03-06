@@ -33,8 +33,8 @@ class AccessLog {
 	String username
 
 	static mapping = {
-		table 'SEARCH_APP_ACCESS_LOG'
-		id generator: 'sequence', params: [sequence: 'SEQ_SEARCH_DATA_ID']
+		table 'SEARCHAPP.SEARCH_APP_ACCESS_LOG'
+		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID']
 		version false
 
 		eventmessage type: 'text'

@@ -44,9 +44,9 @@ class Principal {
 	static transients = ['principalNameWithType']
 
 	static mapping = {
-		table 'SEARCH_AUTH_PRINCIPAL'
+		table 'SEARCHAPP.SEARCH_AUTH_PRINCIPAL'
 		tablePerHierarchy false
-		id generator: 'sequence', params: [sequence: 'hibernate_sequence', schema: 'searchapp']
+		id generator: 'sequence', params: [sequence: 'searchapp.hibernate_sequence']
 		version false
 
 		type column: 'PRINCIPAL_TYPE'

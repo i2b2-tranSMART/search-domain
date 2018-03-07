@@ -37,8 +37,10 @@ class AccessLog {
 		id generator: 'sequence', params: [sequence: 'SEARCHAPP.SEQ_SEARCH_DATA_ID']
 		version false
 
-		eventmessage type: 'text'
-		requestURL column: 'REQUEST_URL'
+		eventmessage column: 'EVENT_MESSAGE', type: 'text'
+                requestURL column: 'REQUEST_URL'
+		username column: 'USER_NAME'
+                accesstime column: 'ACCESS_TIME'
 	}
 
 	static constraints = {

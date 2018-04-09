@@ -18,6 +18,8 @@
  ******************************************************************/
 package org.transmart.searchapp
 
+import org.transmart.plugin.shared.security.Roles
+
 import static org.transmart.searchapp.Principal.PrincipalType.USER
 
 class AuthUser extends Principal {
@@ -62,7 +64,8 @@ class AuthUser extends Principal {
 	static AuthUser createFederatedUser(String federatedId, String username, String realName, String email) {
 		new AuthUser(federatedId: federatedId, username: username ?: federatedId,
 				userRealName: realName ?: '<NONE PROVIDED>', name: realName,
-				email: email, passwd: 'NO_PASSWORD', enabled: true).addToAuthorities Role.findByAuthority(Role.SPECTATOR_ROLE)
+				email: email, passwd: 'NO_PASSWORD', enabled: true).addToAuthorities(
+				Role.findByAuthority(Roles.SPECTATOR.authority))
 	}
 
 	// TODO BB move to tx service

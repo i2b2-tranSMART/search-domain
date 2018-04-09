@@ -18,8 +18,10 @@ grails.project.dependency.resolution = {
 	}
 
 	plugins {
-		compile ':biomart-domain:18.1-SNAPSHOT'
-		compile ':transmart-java:18.1-SNAPSHOT'
+		String tmVersion = '18.1-SNAPSHOT'
+		compile ':biomart-domain:'   + tmVersion
+		compile ':transmart-java:'   + tmVersion
+		compile ':transmart-shared:' + tmVersion
 
 		build ':release:3.1.2', ':rest-client-builder:2.1.1', {
 			export = false

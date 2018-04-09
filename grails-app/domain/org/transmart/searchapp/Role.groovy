@@ -19,14 +19,6 @@
 package org.transmart.searchapp
 
 class Role {
-	// role types
-	public static final String ADMIN_ROLE = 'ROLE_ADMIN'
-	public static final String STUDY_OWNER_ROLE = 'ROLE_STUDY_OWNER'
-	public static final String SPECTATOR_ROLE = 'ROLE_SPECTATOR'
-	public static final String DS_EXPLORER_ROLE = 'ROLE_DATASET_EXPLORER_ADMIN'
-	public static final String PUBLIC_USER_ROLE = 'ROLE_PUBLIC_USER'
-	public static final String TRAINING_USER_ROLE = 'ROLE_TRAINING_USER'
-
 	String authority
 	String description
 

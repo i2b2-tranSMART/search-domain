@@ -31,7 +31,7 @@ class AuthUser extends Principal {
 	String username
 	String userRealName
 
-	static transients = ['admin', 'dseAdmin', 'pass']
+	static transients = ['pass']
 
 	static hasMany = [authorities: Role, groups: UserGroup]
 
@@ -93,13 +93,5 @@ class AuthUser extends Principal {
 
 	def beforeUpdate() {
 		name = userRealName
-	}
-
-	boolean isAdmin() {
-		authorities.any { it.authority == Role.ADMIN_ROLE }
-	}
-
-	boolean isDseAdmin() {
-		authorities.any { it.authority == Role.DS_EXPLORER_ROLE }
 	}
 }

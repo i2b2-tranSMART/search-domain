@@ -22,11 +22,13 @@ package org.transmart.searchapp
 import com.recomdata.util.ExcelGenerator
 import com.recomdata.util.ExcelSheet
 import com.recomdata.util.IDomainExcelWorkbook
+import groovy.util.logging.Slf4j
 import org.transmart.biomart.BioAssayPlatform
 import org.transmart.biomart.CellLine
 import org.transmart.biomart.Compound
 import org.transmart.biomart.ConceptCode
 
+@Slf4j('logger')
 class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 
 	public static final String DOMAIN_KEY = 'GENESIG'
@@ -164,20 +166,20 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 	 * parse comma separated Ids into a list
 	 */
 	List<String> getPmIdsAsList() {
-		log.info("getPmIdsAsList '$pmIds'")
+		logger.info 'getPmIdsAsList "{}"', pmIds
 		if (pmIds == null) {
 			return []
 		}
 
 		List<String> ids = pmIds.split(',')*.trim()
-		log.info("pmIdList $ids")
+		logger.info 'pmIdList {}', ids
 
 		ids
 	}
 
 	GeneSignature clone() {
 
-		log.info 'clone'
+		logger.info 'clone'
 
 		GeneSignature clone = new GeneSignature()
 		copyPropertiesTo clone
@@ -189,56 +191,56 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 	 * create a Map with the properties and values for each property similar to a request map
 	 */
 	Map createParamMap() {
-		log.info'createParamMap'
+		logger.info 'createParamMap'
 
-		[name: name,
-		 description: description,
-		 uploadFile: uploadFile,
-		 'fileSchema.id': fileSchemaId,
-		 'foldChgMetricConceptCode.id': foldChgMetricConceptCodeId,
-		 'analyticCatConceptCode.id': analyticCatConceptCodeId,
-		 analyticCatOther: analyticCatOther,
-		 'techPlatform.id': techPlatformId,
-		 analystName: analystName,
-		 'normMethodConceptCode.id': normMethodConceptCodeId,
-		 normMethodOther: normMethodOther,
-		 'analysisMethodConceptCode.id': analysisMethodConceptCodeId,
-		 analysisMethodOther: analysisMethodOther,
-		 multipleTestingCorrection: multipleTestingCorrection,
-		 'pValueCutoffConceptCode.id': pValueCutoffConceptCodeId,
-		 uniqueId: uniqueId,
-		 publicFlag: publicFlag,
-		 deletedFlag: deletedFlag,
-		 'sourceConceptCode.id': sourceConceptCodeId,
-		 sourceOther: sourceOther,
-		 'ownerConceptCode.id': ownerConceptCodeId,
-		 stimulusDescription: stimulusDescription,
-		 stimulusDosing: stimulusDosing,
-		 treatmentDescription: treatmentDescription,
-		 treatmentDosing: treatmentDosing,
-		 'treatmentCompound.id': treatmentCompoundId,
-		 treatmentProtocolNumber: treatmentProtocolNumber,
-		 pmIds: pmIds,
-		 'speciesConceptCode.id': speciesConceptCodeId,
+		[name                           : name,
+		 description                    : description,
+		 uploadFile                     : uploadFile,
+		 'fileSchema.id'                : fileSchemaId,
+		 'foldChgMetricConceptCode.id'  : foldChgMetricConceptCodeId,
+		 'analyticCatConceptCode.id'    : analyticCatConceptCodeId,
+		 analyticCatOther               : analyticCatOther,
+		 'techPlatform.id'              : techPlatformId,
+		 analystName                    : analystName,
+		 'normMethodConceptCode.id'     : normMethodConceptCodeId,
+		 normMethodOther                : normMethodOther,
+		 'analysisMethodConceptCode.id' : analysisMethodConceptCodeId,
+		 analysisMethodOther            : analysisMethodOther,
+		 multipleTestingCorrection      : multipleTestingCorrection,
+		 'pValueCutoffConceptCode.id'   : pValueCutoffConceptCodeId,
+		 uniqueId                       : uniqueId,
+		 publicFlag                     : publicFlag,
+		 deletedFlag                    : deletedFlag,
+		 'sourceConceptCode.id'         : sourceConceptCodeId,
+		 sourceOther                    : sourceOther,
+		 'ownerConceptCode.id'          : ownerConceptCodeId,
+		 stimulusDescription            : stimulusDescription,
+		 stimulusDosing                 : stimulusDosing,
+		 treatmentDescription           : treatmentDescription,
+		 treatmentDosing                : treatmentDosing,
+		 'treatmentCompound.id'         : treatmentCompoundId,
+		 treatmentProtocolNumber        : treatmentProtocolNumber,
+		 pmIds                          : pmIds,
+		 'speciesConceptCode.id'        : speciesConceptCodeId,
 		 'speciesMouseSrcConceptCode.id': speciesMouseSrcConceptCodeId,
-		 speciesMouseDetail: speciesMouseDetail,
-		 'tissueTypeConceptCode.id': tissueTypeConceptCodeId,
-		 'experimentTypeConceptCode.id': experimentTypeConceptCodeId,
-		 'experimentTypeCellLine.id': experimentTypeCellLineId,
-		 experimentTypeInVivoDescr: experimentTypeInVivoDescr,
-		 experimentTypeATCCRef: experimentTypeATCCRef,
-		 'createdByAuthUser.id': createdByAuthUserId,
-		 dateCreated: dateCreated,
-		 'modifiedByAuthUser.id': modifiedByAuthUserId,
-		 lastUpdated: lastUpdated,
-		 versionNumber: versionNumber]
+		 speciesMouseDetail             : speciesMouseDetail,
+		 'tissueTypeConceptCode.id'     : tissueTypeConceptCodeId,
+		 'experimentTypeConceptCode.id' : experimentTypeConceptCodeId,
+		 'experimentTypeCellLine.id'    : experimentTypeCellLineId,
+		 experimentTypeInVivoDescr      : experimentTypeInVivoDescr,
+		 experimentTypeATCCRef          : experimentTypeATCCRef,
+		 'createdByAuthUser.id'         : createdByAuthUserId,
+		 dateCreated                    : dateCreated,
+		 'modifiedByAuthUser.id'        : modifiedByAuthUserId,
+		 lastUpdated                    : lastUpdated,
+		 versionNumber                  : versionNumber]
 	}
 
 	/**
 	 * copy properties from this instance to the specified object
 	 */
 	void copyPropertiesTo(GeneSignature gs) {
-		log.info'GeneSignature copyPropertiesTo'
+		logger.info 'GeneSignature copyPropertiesTo'
 		gs.analysisMethodConceptCode = analysisMethodConceptCode
 		gs.analysisMethodOther = analysisMethodOther
 		gs.analystName = analystName
@@ -287,9 +289,9 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 	 */
 	byte[] createWorkbook() {
 
-		def values = []
+		logger.info 'createWorkbook'
 
-		log.info('createWorkbook')
+		List values = []
 
 		// general section
 		values << ['1) General Info']
@@ -370,11 +372,12 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 		values << ['Fold-change metric:', foldChgMetricConceptCode?.codeName]
 		values << ['Original upload file:', uploadFile]
 
-		def metaSheet = new ExcelSheet('Gene Signature Info', [], values)
+		ExcelSheet metaSheet = new ExcelSheet('Gene Signature Info', [], values)
 
 		values = []
 
-		//This is a quick fix. These booleans will tell us whether a gene signature was entered with probes or genes. In the future we should add some indicator field to the 'gene' list to say what it is made of.
+		//This is a quick fix. These booleans will tell us whether a gene signature was entered with probes or genes.
+		// In the future we should add some indicator field to the 'gene' list to say what it is made of.
 		boolean hasGenes = false
 		boolean hasProbes = false
 		for (GeneSignatureItem gsi in geneSigItems) {

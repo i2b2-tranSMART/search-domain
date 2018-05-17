@@ -58,7 +58,7 @@ class Principal {
 	}
 
 	def beforeInsert() {
-		uniqueId = type + ' ' + id
+		uniqueId = type.toString() + ' ' + id
 	}
 
 	String getPrincipalNameWithType() {

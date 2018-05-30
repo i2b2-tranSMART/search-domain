@@ -21,10 +21,10 @@ package org.transmart.searchapp
 import org.transmart.biomart.BioMarker
 
 class GeneSignatureItem {
+	Long bioAssayFeatureGroupId
 	String bioDataUniqueId
 	BioMarker bioMarker
 	Double foldChgMetric
-	GeneSignature geneSignature
 	Long probesetId
 
 	static transients = ['geneSymbol', 'probeset']
@@ -44,6 +44,7 @@ class GeneSignatureItem {
 	}
 
 	static constraints = {
+		bioAssayFeatureGroupId nullable: true
 		bioDataUniqueId nullable: true
 		bioMarker nullable: true
 		foldChgMetric nullable: true

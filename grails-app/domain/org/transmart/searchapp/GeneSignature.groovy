@@ -45,7 +45,7 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 	String analyticCatOther
 	AuthUser createdByAuthUser
 	Date dateCreated
-	boolean deletedFlag
+	Boolean deletedFlag
 	String description
 	String experimentTypeATCCRef
 	CellLine experimentTypeCellLine
@@ -55,14 +55,14 @@ class GeneSignature implements Cloneable, IDomainExcelWorkbook {
 	ConceptCode foldChgMetricConceptCode
 	Date lastUpdated
 	AuthUser modifiedByAuthUser
-	boolean multipleTestingCorrection
+	Boolean multipleTestingCorrection
 	String name
 	ConceptCode normMethodConceptCode
 	String normMethodOther
 	ConceptCode ownerConceptCode
 	GeneSignature parentGeneSignature
 	String pmIds
-	boolean publicFlag
+	Boolean publicFlag
 	ConceptCode pValueCutoffConceptCode
 	ConceptCode sourceConceptCode
 	String sourceOther

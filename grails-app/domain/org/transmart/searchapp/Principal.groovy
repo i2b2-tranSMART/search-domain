@@ -35,7 +35,7 @@ class Principal {
 
 	Date dateCreated
 	String description = ''
-	boolean enabled
+	Boolean enabled
 	Date lastUpdated
 	String name
 	PrincipalType type
